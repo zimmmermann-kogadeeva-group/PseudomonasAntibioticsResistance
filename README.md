@@ -1,5 +1,5 @@
 
-[![DOI](https://zenodo.org/badge/908679580.svg)](https://doi.org/10.5281/zenodo.14559333)
+[![DOI](https://zenodo.org/badge/916817221.svg)](https://doi.org/10.5281/zenodo.14648253)
 
 # Pseudomonas antibiotic resistance project
 
