@@ -1,0 +1,7 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - bioconductor-deseq2=1.38.0
+  - bioconductor-tximport=1.26.0
+  - r-tidyverse=2.0.0

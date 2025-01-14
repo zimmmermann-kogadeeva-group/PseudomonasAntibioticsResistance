@@ -1,0 +1,44 @@
+name: omics
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - bioconductor-clusterprofiler
+  - bioconductor-deseq2
+  - bioconductor-mofa2
+  - bioconductor-tximport
+  - ca-certificates
+  - certifi
+  - ipympl
+  - jupyterlab=3.6
+  - numpy
+  - openpyxl
+  - openssl
+  - pandas==2.1
+  - pip
+  - plotly
+  - python-kaleido
+  - python=3.10
+  - r-ggally
+  - r-ggdist
+  - r-ggpubr
+  - r-irkernel
+  - r-plotly
+  - r-psych
+  - r-rjson
+  - r-stringi=1.7.8
+  - r-tidyverse
+  - r-wgcna
+  - scikit-learn
+  - seaborn=0.13
+  - snakemake
+  - tqdm
+  - diskcache
+  - bcbio-gff
+  - pip:
+      - anndata==0.8.0
+      - h5py==3.8.0
+      - matplotlib-venn==1.1.1
+      - mofapy2==0.7.0
+      - natsort==8.3.1
+prefix: /home/bartosz/.conda/envs/omics
