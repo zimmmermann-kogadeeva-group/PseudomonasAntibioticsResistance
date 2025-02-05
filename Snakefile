@@ -164,7 +164,7 @@ rule run_snippy_pe:
     resources:
         cpus=16,
         mem_mb=lambda wildcards, attempt: f"{10 + 5 * attempt}G",
-        runtime=lambda wildcards, attempt: 360 * attempt
+        runtime=lambda wildcards, attempt: 600 * attempt
     conda:
         "Envs/snippy.yaml"
     shadow: 
@@ -184,7 +184,7 @@ rule run_snippy_se:
     resources:
         cpus=16,
         mem_mb=lambda wildcards, attempt: f"{10 + 5 * attempt}G",
-        runtime=lambda wildcards, attempt: 360 * attempt
+        runtime=lambda wildcards, attempt: 600 * attempt
     conda:
         "Envs/snippy.yaml"
     shadow: 
