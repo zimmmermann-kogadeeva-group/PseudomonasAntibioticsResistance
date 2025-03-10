@@ -40,12 +40,58 @@ rule multiqc:
     shell:
         "multiqc Output/QC/ -o Output/QC/"
 
-rule trimmomatic:
+rule trimmomatic_pe:
     input:
         adapter="Data/illumina_adapters.fasta",
-        fastq="Data/{path_to_file}.fastq.gz"
+        fastq_r1="Data/WGS/{path_to_file}_R1.fastq.gz",
+        fastq_r2="Data/WGS/{path_to_file}_R2.fastq.gz"
     output:
-        temp("Output/TrimmedReads/{path_to_file}.fastq.gz")
+        temp("Output/TrimmedReads/WGS/{path_to_file}_R1.fastq.gz"),
+        temp("Output/TrimmedReads/WGS/{path_to_file}_R1_unpaired.fastq.gz"),
+        temp("Output/TrimmedReads/WGS/{path_to_file}_R2.fastq.gz"),
+        temp("Output/TrimmedReads/WGS/{path_to_file}_R2_unpaired.fastq.gz")
+    params:
+        trim_opts = lambda wildcards, input :  
+            f"ILLUMINACLIP:{input.adapter}:2:30:10 "
+            "LEADING:3 "
+            "TRAILING:3 "
+            "MINLEN:36 "
+            "SLIDINGWINDOW:4:15 "
+    conda:
+        "Envs/trimmomatic.yaml"
+    resources:
+        runtime = lambda wildcards, attempt: 180 * attempt,
+        mem_mb = "5G"
+    shell:
+        "trimmomatic PE {input.fastq_r1} {input.fastq_r2} {output} {params.trim_opts}"
+
+rule trimmomatic_se:
+    input:
+        adapter="Data/illumina_adapters.fasta",
+        fastq="Data/WGS/{path_to_file}_SE.fastq.gz"
+    output:
+        temp("Output/TrimmedReads/WGS/{path_to_file}_SE.fastq.gz")
+    params:
+        trim_opts = lambda wildcards, input :  
+            f"ILLUMINACLIP:{input.adapter}:2:30:10 "
+            "LEADING:3 "
+            "TRAILING:3 "
+            "SLIDINGWINDOW:4:15 "
+            "MINLEN:36"
+    conda:
+        "Envs/trimmomatic.yaml"
+    resources:
+        runtime = lambda wildcards, attempt: 180 * attempt,
+        mem_mb = "5G"
+    shell:
+        "trimmomatic SE -phred33 {input.fastq} {output} {params.trim_opts}"
+
+rule trimmomatic_transcriptomics:
+    input:
+        adapter="Data/illumina_adapters.fasta",
+        fastq="Data/Transcriptomics/{path_to_file}.fastq.gz"
+    output:
+        temp("Output/TrimmedReads/Transcriptomics/{path_to_file}.fastq.gz")
     params:
         trim_opts = lambda wildcards, input :  
             f"ILLUMINACLIP:{input.adapter}:2:30:10 "
@@ -62,8 +108,8 @@ rule trimmomatic:
 
 rule merge:
     input:
-        l1="Output/TrimmedReads/{path_to_file}_L1.fastq.gz",
-        l2="Output/TrimmedReads/{path_to_file}_L2.fastq.gz"
+        l1="Output/TrimmedReads/Transcriptomics/{path_to_file}_L1.fastq.gz",
+        l2="Output/TrimmedReads/Transcriptomics/{path_to_file}_L2.fastq.gz"
     output:
         merged=temp("Output/Merged/{path_to_file}.fastq.gz")
     shell:
@@ -156,15 +202,15 @@ rule prokka:
 
 rule run_snippy_pe:
     input:
-        r1 = "Data/WGS/TrimmedReads/{strain}_{cond}_R1.fastq.gz",
-        r2 = "Data/WGS/TrimmedReads/{strain}_{cond}_R2.fastq.gz",
+        r1 = "Output/TrimmedReads/WGS/Illumina/{strain}_{cond}_R1.fastq.gz",
+        r2 = "Output/TrimmedReads/WGS/Illumina/{strain}_{cond}_R2.fastq.gz",
         ref="Output/Prokka/WGS/Assemblies/{ref_strain}_P/prokka.gbk"
     output:
         directory("Output/Snippy/{strain}_{cond}_vs_{ref_strain}_P")
     resources:
         cpus=16,
         mem_mb=lambda wildcards, attempt: f"{10 + 5 * attempt}G",
-        runtime=lambda wildcards, attempt: 600 * attempt
+        runtime=lambda wildcards, attempt: 360 * attempt
     conda:
         "Envs/snippy.yaml"
     shadow: 
@@ -177,14 +223,14 @@ rule run_snippy_pe:
 
 rule run_snippy_se:
     input:
-        se = "Data/WGS/TrimmedReads/{strain}_{cond}.fastq.gz",
+        se = "Output/TrimmedReads/WGS/Illumina/{strain}_{cond}_SE.fastq.gz",
         ref="Output/Prokka/WGS/Assemblies/{ref_strain}_P/prokka.gbk"
     output:
         directory("Output/Snippy/{strain}_{cond}_vs_{ref_strain}_P")
     resources:
         cpus=16,
         mem_mb=lambda wildcards, attempt: f"{10 + 5 * attempt}G",
-        runtime=lambda wildcards, attempt: 600 * attempt
+        runtime=lambda wildcards, attempt: 360 * attempt
     conda:
         "Envs/snippy.yaml"
     shadow: 
