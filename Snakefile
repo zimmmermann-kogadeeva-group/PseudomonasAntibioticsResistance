@@ -205,3 +205,34 @@ rule all_snippy:
     output:
         touch("Output/Snippy/.all")
 
+
+pa_genomes = glob_wildcards("Data/OtherGenomes/Pseudomonas_aeruginosa_{species}.fna")
+
+rule mashtree_sixstrains:
+    input:
+        expand("Data/WGS/Assemblies/{strain}_P.fasta", strain=config["selected_strains"])
+    output:
+        tree="Output/Mashtree/SixStrains/mashtree.dnd",
+        dist_mat="Output/Mashtree/SixStrains/dist_matrix.txt"
+    conda:
+        "Envs/mashtree.yaml"
+    resources:
+        runtime = 10,
+        cpus = 12
+    shell:
+        "mashtree --numcpus 12 {input} --outmatrix {output.dist_mat} > {output.tree}"
+
+rule mashtree_otherstrains:
+    input:
+        expand("Data/WGS/Assemblies/{strain}_P.fasta", strain=config["selected_strains"]),
+        expand("Data/OtherGenomes/Pseudomonas_aeruginosa_{sp}.fna", sp=pa_genomes.species)
+    output:
+        tree="Output/Mashtree/OtherStrains/mashtree.dnd",
+        dist_mat="Output/Mashtree/OtherStrains/dist_matrix.txt"
+    conda:
+        "Envs/mashtree.yaml"
+    resources:
+        runtime = 300,
+        cpus = 12
+    shell:
+        "mashtree --numcpus 12 {input} --outmatrix {output.dist_mat} > {output.tree}"

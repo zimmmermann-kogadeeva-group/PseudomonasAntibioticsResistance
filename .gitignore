@@ -13,6 +13,7 @@ __pycache__/
 Output/DESeq2/
 Output/Prokka/
 Output/Proteomics/
+Output/Mashtree/
 Output/QC/
 Output/Quants/
 Output/SalmonIndex/

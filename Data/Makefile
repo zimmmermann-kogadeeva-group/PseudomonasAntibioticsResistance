@@ -1,5 +1,9 @@
 
-all: reference.fasta.gz annotation.tsv
+all: reference.fasta.gz annotation.tsv OtherGenomes
+
+OTHER_GENOMES_URL='https://www.pseudomonas.com/downloads/pseudomonas/pgd_r_22_1/Pseudomonas/complete/fna-complete.tar.gz'
+OtherGenomes:
+	wget ${OTHER_GENOMES_URL} && gunzip fna-complete.tar.gz && mv fna $@ && rm fna-complete.tar.gz
 
 ILLUMNA_ADAPTERS_URL = 'https://cloud.stevenschmitt.de/s/axhzCB8h7CZKvui/download?path=%2FDocumentation%2FHelpful%20Files&files=Illumina_Adapters.fasta'
 illumina_adapters.fasta:
