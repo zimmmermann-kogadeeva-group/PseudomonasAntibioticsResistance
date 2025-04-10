@@ -113,6 +113,7 @@ rule run_deseq2:
     script:
         "Scripts/run_deseq2.R"
 
+
 rule get_proteomics:
     input:
         expand("Data/Proteomics/{f}.txt", f=config["proteomics"])
@@ -205,6 +206,58 @@ rule all_snippy:
     output:
         touch("Output/Snippy/.all")
 
+# Public datasets
+
+rule salmon_pd_mem2:
+    input:
+        index="Output/SalmonIndex",
+        transcript1="Data/PublicDatasets/{dataset}/{filename}__1.fastq.gz",
+        transcript2="Data/PublicDatasets/{dataset}/{filename}__2.fastq.gz"
+    output:
+        "Output/PublicDatasets/{dataset}/Quants/{filename}/quant.sf"
+    conda:
+        "Envs/salmon.yaml"
+    params:
+        outdir = lambda wildcards, output : Path(output[0]).parent
+    shell:
+        "salmon quant -i {input.index} -l A -p 1 --gcBias --validateMappings "
+        "-1 {input.transcript1} -2 {input.transcript2} -o {params.outdir}"
+
+dataset1_files = glob_wildcards("Data/PublicDatasets/PRJNA1066021/{filename}__1.fastq.gz")
+
+rule all_pd_mem2_quants:
+    input:
+        expand("Output/PublicDatasets/PRJNA1066021/Quants/{filename}/quant.sf", filename=dataset1_files.filename)
+
+rule deseq2_pd_mem2:
+    input:
+        quants=expand("Output/PublicDatasets/PRJNA1066021/Quants/PAO1_{cond}_{repl}/quant.sf", cond=["control", "MEM"], repl=[1, 2, 3]),
+        annot="Data/annotation.tsv",
+        id_map="Data/uniprot_mapping.csv",
+    output:
+        "Output/PublicDatasets/PRJNA1066021/lfc.csv"
+    conda:
+        "Envs/deseq2.yaml"
+    resources:
+        mem_mb = "5G"
+    script:
+        "Scripts/mem_2.R"
+
+rule deseq2_pd_mem3:
+    input:
+        metadata="Data/PublicDatasets/GSE123544/phenotypes.txt",
+        counts="Data/PublicDatasets/GSE123544/GSE123544_ProcessedDataMatrix_clinical_isolates.xlsx",
+        orthologs="Data/PublicDatasets/GSE123544/orthologs.csv"
+    output:
+        "Output/PublicDatasets/GSE123544/lfc.csv"
+    conda:
+        "Envs/deseq2.yaml"
+    resources:
+        mem_mb = "5G"
+    script:
+        "Scripts/mem_3.R"
+
+# Phylogenetic trees
 
 pa_genomes = glob_wildcards("Data/OtherGenomes/Pseudomonas_aeruginosa_{species}.fna")
 other_strains = [x for x in pa_genomes.species if x not in config["exclude_genomes"]]

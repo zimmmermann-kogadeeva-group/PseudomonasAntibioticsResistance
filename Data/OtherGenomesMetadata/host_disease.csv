@@ -1,0 +1,83 @@
+host_disease,host_disease_alt
+cystic fibrosis,cystic fibrosis
+burn,burn
+keratitis,eye infection
+respiratory tract infection,lung infection
+cancer,cancer
+assymptomatic carrier,other
+urinary tract infection,UTI
+nosocomial infections,other
+respiratory disease,lung infection
+ventilator associated pneumonia,lung infection
+comunity-adquired pneumonia,lung infection
+ventilator-associated pneumonia,lung infection
+wound,other
+pneumonia,lung infection
+chiari malformation,other
+respiratory failure,lung infection
+uti,UTI
+microbial keratitis,eye infection
+bacteremia,blood infection
+sepsis,other
+cardiac arrest,other
+urinary infection,UTI
+infection,other
+conjunctiva infection,eye infection
+cerebral trauma after surgery,other
+obstructive jaundice,other
+mink hemorrhagic pneumonia,lung infection
+lung infection,lung infection
+hcap - acute pneumonia,lung infection
+hematencephalon,other
+leg ulcer,other
+peritonitis,other
+infection caused by fracture,other
+pulmonary contusion,other
+pancreatitis,other
+heart failure combined pulmonary infection,other
+sinusitis
+urinary tract infetion,UTI
+asymptomatic bacteriuria,UTI
+chronic respiratory failure,lung infection
+bronchiectasis,lung infection
+acute pulmonary infection,lung infection
+urine infection,UTI
+pseudomonas infection,other
+"severe sepsis, urinary tract infection and lung infection",UTI
+leukemia,cancer
+wound discharge,other
+"surgical procedures, operative",other
+surgical procedures,other
+burn injury,burn
+fever,other
+pulmonary infection,lung infection
+cholelithiasis,other
+neurosurgery,other
+lung cancer,cancer
+pleura tumor,cancer
+septicemia,other
+burn wound,burn
+bacterial infectious disease,other
+hip joint infection,other
+lower respiratory tract disease,lung infection
+atherosclerosis,other
+breast implant associated infection,other
+acute toxic encephalopathy,other
+diabetes,other
+ulcer,other
+craniocerebral trauma,other
+cerebral hemorrhage,other
+copd,other
+respiratory tube,lung infection
+tracheal colonization,lung infection
+eye infection,eye infection
+polymicrobial infection,other
+chronic kidney disease,other
+gallbladder carcinoma,cancer
+asthma,other
+multiple trauma,other
+esophagus cancer,cancer
+nterstitial lung disease,lung infection
+difficulty in breathing,other
+laryngeal neoplasm,cancer
+corneal ulcer,eye infection
