@@ -10,6 +10,8 @@ __pycache__/
 *.swp
 *.svg
 
+Data/OtherGenomes/*.fna
+
 Output/DESeq2/
 Output/Prokka/
 Output/Proteomics/

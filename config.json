@@ -4,6 +4,7 @@
     "ignore_strains": ["403.3", "446.1", "816.2"],
     "comparisons": ["CvsP", "MvsP", "CvsM"],
     "exclude_workunits": ["260059", "260060", "260061"],
+    "exclude_genomes": ["PA7_119", "A39-1_15952", "AZPAE15042_11928", "CR1_6461",  "Zw26_22005", "AR441_6528", "AR_0356_7083"],
     "transcriptomics": [
         "083.2_C_A",
         "083.2_C_B",

@@ -207,6 +207,7 @@ rule all_snippy:
 
 
 pa_genomes = glob_wildcards("Data/OtherGenomes/Pseudomonas_aeruginosa_{species}.fna")
+other_strains = [x for x in pa_genomes.species if x not in config["exclude_genomes"]]
 
 rule mashtree_sixstrains:
     input:
@@ -225,7 +226,7 @@ rule mashtree_sixstrains:
 rule mashtree_otherstrains:
     input:
         expand("Data/WGS/Assemblies/{strain}_P.fasta", strain=config["selected_strains"]),
-        expand("Data/OtherGenomes/Pseudomonas_aeruginosa_{sp}.fna", sp=pa_genomes.species)
+        expand("Data/OtherGenomes/Pseudomonas_aeruginosa_{sp}.fna", sp=other_strains)
     output:
         tree="Output/Mashtree/OtherStrains/mashtree.dnd",
         dist_mat="Output/Mashtree/OtherStrains/dist_matrix.txt"
