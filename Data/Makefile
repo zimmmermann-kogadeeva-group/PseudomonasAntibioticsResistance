@@ -1,5 +1,5 @@
 
-all: reference.fasta.gz annotation.tsv OtherGenomes
+all: reference.fasta.gz annotation.tsv OtherGenomes OtherGenomesMetadata/metadata.tsv
 
 ILLUMNA_ADAPTERS_URL = 'https://cloud.stevenschmitt.de/s/axhzCB8h7CZKvui/download?path=%2FDocumentation%2FHelpful%20Files&files=Illumina_Adapters.fasta'
 illumina_adapters.fasta:
@@ -40,3 +40,12 @@ PublicDatasets/GSE167137/GSE167137_P_aeruginosa_expression_PA_0M_vs_PA_5M_.xlsx:
 MEM_3_URL = 'https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE123544&format=file&file=GSE123544%5FProcessedDataMatrix%5Fclinical%5Fisolates%2Exlsx'
 PublicDatasets/GSE123544/GSE123544_ProcessedDataMatrix_clinical_isolates.xlsx:
 	mkdir -p $(dir $@) && wget ${MEM_3_URL} -O $@
+
+MEM_3_ORTHOLOGS_URL='https://www.pseudomonas.com/rbbh/pairs?format=CSV&query_strain_id=107&queryStrain=Pseudomonas%20aeruginosa%20PAO1%20(Stover%20et%20al.,%202000)&hit_strain_id=109&hitStrain=Pseudomonas%20aeruginosa%20UCBPP-PA14%20(Lee%20et%20al.,%202006)&max=100&sort=gene.locusTag&offset=0&order=asc'
+PublicDatasets/GSE123544/orthologs.csv:
+	mkdir -p $(dir $@) && wget ${MEM_3_ORTHOLOGS_URL} -O $@
+
+MEM_3_PHENOTYPE_URL='https://zenodo.org/records/3464542/files/metadata.zip?download=1'
+PublicDatasets/GSE123544/phenotypes.txt:
+	mkdir -p $(dir $@) && wget ${MEM_3_PHENOTYPE_URL} -O mem3_phenotypes.zip && \
+	unzip $@.zip && mv metadata/phenotypes.txt $@ && rm -rf metadata mem3_phenotypes.zip

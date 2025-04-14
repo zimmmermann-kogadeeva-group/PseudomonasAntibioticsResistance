@@ -11,6 +11,7 @@ __pycache__/
 *.svg
 
 Data/OtherGenomes/*.fna
+Scripts/*.Rmd
 
 Output/DESeq2/
 Output/Prokka/
@@ -20,4 +21,6 @@ Output/QC/
 Output/Quants/
 Output/SalmonIndex/
 Output/Snippy/
+Output/ST/
+Output/PublicDatasets/
 Output/SITables/*.xlsx
