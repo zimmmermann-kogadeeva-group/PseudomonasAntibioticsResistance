@@ -290,3 +290,16 @@ rule mashtree_otherstrains:
         cpus = 12
     shell:
         "mashtree --numcpus 12 {input} --outmatrix {output.dist_mat} > {output.tree}"
+
+# ST (sequence typing)
+rule get_seqs_with_blast:
+    input:
+        genes="Data/ST/st_genes.fna",
+        genome="Data/WGS/Assemblies/{strain}_P.fasta"
+    output:
+        raw_blast=directory("Output/ST/Blast/{strain}_P/"),
+        genes="Output/ST/Fasta/{strain}_P.fasta"
+    conda:
+        "Envs/st.yaml"
+    shell:
+        "Scripts/get_seqs_with_blast.py {input.genes} {input.genome} {output.raw_blast} -o {output.genes}"
