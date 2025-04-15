@@ -10,6 +10,7 @@ __pycache__/
 *.swp
 
 Data/OtherGenomes/*.fna
+Data/PublicDatasets/PRJNA1066021/*.fastq.gz
 Scripts/*.Rmd
 
 Output/DESeq2/

@@ -49,3 +49,6 @@ MEM_3_PHENOTYPE_URL='https://zenodo.org/records/3464542/files/metadata.zip?downl
 PublicDatasets/GSE123544/phenotypes.txt:
 	mkdir -p $(dir $@) && wget ${MEM_3_PHENOTYPE_URL} -O mem3_phenotypes.zip && \
 	unzip $@.zip && mv metadata/phenotypes.txt $@ && rm -rf metadata mem3_phenotypes.zip
+
+PublicDatasets/PRJNA1066021:
+	./ena_file_download_PRJNA1066021.sh $@
